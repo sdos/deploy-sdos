@@ -10,6 +10,15 @@ deploy and setup all the MCM/SDOS components to get a working system
 * [Retention Manager](https://github.com/timwaizenegger/mcm-retentionManager)
 
 
+## Automated deployment
+
+* install an ubuntu VM; 14.04 and 16.04 were tested
+* clone this repo
+* run the script: `./mcm-deployEnvironment/deployMCM.sh`
+
+
+
+
 ## Manual deploy procedure / dev setup
 install an ubuntu VM; 14.04 and 16.04 were tested
 clone this repo and copy config files
@@ -25,6 +34,19 @@ install packages
     sudo apt install npm nodejs-legacy screen python3-pip git daemontools
     pip3 install virtualenv
     
+    
+We use GNU-screen for running the different services on a dev-VM. You can run them any other way you like as well. Some info on how screen is used here:
+
+screen is a window-manager for the shell; it manages multiple shell-windows and keeps running after you disconnect from ssh/tty.
+
+* we provide a screenrc config file; it shows a window-list with some predefined names. These shells are the same; they just have labels.
+* on the first start, run `screen` to start a session; all predefined windows will open.
+* leave screen via `Ctrl + a, d` (press Ctrl & a at the same time, then press d). Now you can disconnect ssh
+* re-enter your session later via `screen -r`. Make sure you only have one session running; otherwise you might have multiple instances of services running without knowing.
+* switch between the windows in screen via `Ctrl + a, <space>` go to a specific windows (e.g. 0) via `Ctrl + a, 0`
+* create a new window: `Ctrl + a, c`
+* close a window: just `exit` the shell in that window
+ 
 start a screen instance and open windows for: SDOS, bluebox, node-red
 ### SDOS-screen:
 
@@ -63,7 +85,8 @@ follow setup instructions from Bluebox-docs:
     
 modify the config file; set the swift URLs. 
  if you connect through SDOS and it runs locally with defaults, just set "localhost:3000"
- if you want to use nodeRed for the analytics component; set the URL here. A default local setu as explained later will have the URL: localhost:1880
+ if you want to use nodeRed for the analytics component; set the URL here. 
+ A default setup as explained later will have port 1880. You need to provide the URL that the machine has from the outside; i.e. what the user will see
 
 
     cp mcm/Bluebox/appConfig.example.py mcm/Bluebox/appConfig.py
@@ -83,4 +106,6 @@ switch to the Nodered screen
     
 we use the daemontools "supervise" command to run node-red. Node-red seems very unstable so supervise will keep it running.
 
-    supervise mcm-deployEnvironment/nodered-runner/
+    supervise mcm-deployEnvironment/nodered-runner
+    
+we have an example flows-file for nodered that shows some possible analyses in this repo. To use, simply replace the default flows-file in ".node-red/" with the example.

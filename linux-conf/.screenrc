@@ -18,6 +18,6 @@ screen -t SDOS	    0
 screen -t Bluebox	1
 screen -t node-red	2
 screen -t shell		3
-screen -t top 		2	top
+screen -t top 		4	top
 
 termcapinfo xterm|xterms|xs|rxvt ti@:te@
