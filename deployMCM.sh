@@ -13,7 +13,7 @@ cp mcm-deployEnvironment/linux-conf/.* .
 source .profile
 sudo apt update
 sudo apt dist-upgrade
-sudo apt install npm nodejs-legacy screen python3-pip git daemontools
+sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools
 pip3 install virtualenv
 
 

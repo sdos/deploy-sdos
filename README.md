@@ -12,10 +12,10 @@ deploy and setup all the MCM/SDOS components to get a working system
 
 ## Automated deployment
 
-* install an ubuntu VM; 14.04 and 16.04 were tested
-* clone this repo
-* run the script: `./mcm-deployEnvironment/deployMCM.sh`
-
+1. install an ubuntu VM; 14.04 and 16.04 were tested
+2. clone this repo: `git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git`
+3. run the script: `bash mcm-deployEnvironment/deployMCM.sh`
+4. start a screen session `screen` and start the 3 services (details below in the "manual" section)
 
 
 
