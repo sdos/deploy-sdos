@@ -22,7 +22,7 @@ install packages
 
     sudo apt update
     sudo apt dist-upgrade
-    sudo apt install npm screen python3-pip git
+    sudo apt install npm nodejs-legacy screen python3-pip git daemontools
     pip3 install virtualenv
     
 start a screen instance and open windows for: SDOS, bluebox, node-red
@@ -73,3 +73,14 @@ done! you can start the Bluebox service in dev or production mode:
 
 * for local development/testing: `python runApp_Development.py`
 * for production: `./runApp_Production.sh`
+
+
+### Nodered-screen
+switch to the Nodered screen
+
+    cd
+    npm install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red
+    
+we use the daemontools "supervise" command to run node-red. Node-red seems very unstable so supervise will keep it running.
+
+    supervise mcm-deployEnvironment/nodered-runner/
