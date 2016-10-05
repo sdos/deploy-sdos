@@ -33,6 +33,9 @@ cd mcm-bluebox/
 virtualenv venvBB
 . setenv.sh
 pip install -r requirements.txt
+cd mcm/Bluebox/angular
+npm install
+cd ../../../
 cp mcm/Bluebox/appConfig.example.py mcm/Bluebox/appConfig.py
 deactivate
 

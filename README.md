@@ -82,6 +82,9 @@ follow setup instructions from Bluebox-docs:
     virtualenv venvBB
     . setenv.sh
     pip install -r requirements.txt
+    cd mcm/Bluebox/angular
+    npm install
+    cd ../../../
     
 modify the config file; set the swift URLs. 
  if you connect through SDOS and it runs locally with defaults, just set "localhost:3000"
