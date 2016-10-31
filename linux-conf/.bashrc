@@ -3,7 +3,7 @@
 # for examples
 
 # set PATH so it includes user's private bin directories
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH:$HOME/node_modules/.bin"
 export LESS=' -R '
 export LC_ALL=C
 

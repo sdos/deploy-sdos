@@ -15,6 +15,7 @@ sudo apt update
 sudo apt dist-upgrade
 sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools
 pip3 install virtualenv
+npm install yarn
 
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying SDOS"
@@ -34,14 +35,14 @@ virtualenv venvBB
 . setenv.sh
 pip install -r requirements.txt
 cd mcm/Bluebox/angular
-npm install
+yarn install
 cd ../../../
 cp mcm/Bluebox/appConfig.example.py mcm/Bluebox/appConfig.py
 deactivate
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying Nodered"
 cd
-npm install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red
+yarn install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red
 
 
 echo ">>>>>>MCM deploy>>>>>>>> All done!\  modify the config files in:\n $HOME/mcm-sdos/mcm/sdos/configuration.py\n $HOME/mcm-bluebox/mcm/Bluebox/appConfig.py"

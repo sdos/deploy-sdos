@@ -10,7 +10,48 @@ deploy and setup all the MCM/SDOS components to get a working system
 * [Retention Manager](https://github.com/timwaizenegger/mcm-retentionManager)
 
 
-## Automated deployment
+
+## Swift backend
+MCM is based around the Swift object store; or ar least Swift's REST-API. You may use
+any storage backend that uses the Swift-API like a Swift-Service or Ceph. For the dev-environment we use
+a local single-node Swift setup:
+
+#### Swift all in one setup:
+http://docs.openstack.org/developer/swift/development_saio.html
+
+#### SAIO run:
+
+    startmain
+    startrest
+
+#### SAIO update:
+
+    cd $HOME/python-swiftclient
+    git pull
+    sudo python setup.py develop
+
+    cd $HOME/swift
+    git pull
+    sudo python setup.py develop
+
+
+
+## Kafka broker
+we use a kafka broker for communication between the components.
+Any existing broker can be used, the connection just has to be configured in the
+components' config files. For dev we use a local kafka in docker:
+
+    git clone https://github.com/timwaizenegger/docker-kafka.git
+    cd docker-kafka/
+    docker build . 
+    docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="192.168.209.208" --env ADVERTISED_PORT=9092 <ID>
+    
+     
+
+
+
+
+# Automated deployment
 
 1. install an ubuntu VM; 14.04 and 16.04 were tested
 2. clone this repo: `git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git`
@@ -19,7 +60,7 @@ deploy and setup all the MCM/SDOS components to get a working system
 
 
 
-## Manual deploy procedure / dev setup
+# Manual deploy procedure / dev setup
 install an ubuntu VM; 14.04 and 16.04 were tested
 clone this repo and copy config files
 
@@ -33,7 +74,7 @@ install packages
     sudo apt dist-upgrade
     sudo apt install npm nodejs-legacy screen python3-pip git daemontools
     pip3 install virtualenv
-    
+    npm install yarn
     
 We use GNU-screen for running the different services on a dev-VM. You can run them any other way you like as well. Some info on how screen is used here:
 
@@ -83,7 +124,7 @@ follow setup instructions from Bluebox-docs:
     . setenv.sh
     pip install -r requirements.txt
     cd mcm/Bluebox/angular
-    npm install
+    yarn install
     cd ../../../
     
 modify the config file; set the swift URLs. 

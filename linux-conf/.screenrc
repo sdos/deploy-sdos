@@ -16,8 +16,11 @@ terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
 screen -t SDOS	    0
 screen -t Bluebox	1
-screen -t node-red	2
-screen -t shell		3
-screen -t top 		4	top
+screen -t retentionM	2
+screen -t metadataEx	3
+screen -t kafka	4
+screen -t node-red	5
+screen -t shell		6
+screen -t top 		7	top
 
 termcapinfo xterm|xterms|xs|rxvt ti@:te@
