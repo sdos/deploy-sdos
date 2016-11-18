@@ -48,6 +48,11 @@ components' config files. For dev we use a local kafka in docker:
     
      
 
+## Metadata warehouse (PostgreSQL RDBMS)
+We use a PostgreSQL relational database as a metadata warehouse. All metadata from swift can be
+ replicated to the warehouse in order to perform analyses. For the dev setup, we use postgres in a local docker container:
+ 
+    docker run --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 -d postgres
 
 
 
