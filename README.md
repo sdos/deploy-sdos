@@ -77,7 +77,7 @@ install packages
 
     sudo apt update
     sudo apt dist-upgrade
-    sudo apt install npm nodejs-legacy screen python3-pip git daemontools
+    sudo apt install npm nodejs-legacy screen python3-pip git daemontools libpq-dev
     pip3 install virtualenv
     npm install yarn
     
