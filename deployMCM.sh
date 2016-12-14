@@ -13,7 +13,7 @@ cp mcm-deployEnvironment/linux-conf/.* .
 source .profile
 sudo apt update
 sudo apt dist-upgrade
-sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev
+sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1
 pip3 install virtualenv
 npm install yarn
 
@@ -42,7 +42,7 @@ deactivate
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying Nodered"
 cd
-yarn install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red
+yarn install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red-contrib-postgres node-red
 
 
 echo ">>>>>>MCM deploy>>>>>>>> All done!\  modify the config files in:\n $HOME/mcm-sdos/mcm/sdos/configuration.py\n $HOME/mcm-bluebox/mcm/Bluebox/appConfig.py"

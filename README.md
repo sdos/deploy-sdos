@@ -77,7 +77,7 @@ install packages
 
     sudo apt update
     sudo apt dist-upgrade
-    sudo apt install npm nodejs-legacy screen python3-pip git daemontools libpq-dev
+    sudo apt install npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1
     pip3 install virtualenv
     npm install yarn
     
@@ -151,7 +151,7 @@ done! you can start the Bluebox service in dev or production mode:
 switch to the Nodered screen
 
     cd
-    npm install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red
+    npm install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red-contrib-postgres node-red
     
 we use the daemontools "supervise" command to run node-red. Node-red seems very unstable so supervise will keep it running.
 
