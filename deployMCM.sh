@@ -16,6 +16,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt update
 sudo apt dist-upgrade
 sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1 yarn docker.io htop
+pip3 install --upgrade pip
 pip3 install virtualenv
 A=$(whoami)
 sudo usermod -a -G docker $A
