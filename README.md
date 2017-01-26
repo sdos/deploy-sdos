@@ -16,7 +16,10 @@ deploy and setup all the MCM/SDOS components to get a working system
 1. install an ubuntu VM; 14.04, 16.04, and 16.10 were tested
 2. clone this repo: `git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git`
 3. run the script: `bash mcm-deployEnvironment/deployMCM.sh`
-4. if you run all MCM services on localhost, you just need to set 2 things: swift endpoint in SDOS config and tenant-id in metadata extractor config.
+4. if you run all MCM services on localhost, you just need to: 
+    - set swift endpoint in SDOS config 
+    - set tenant-id in metadata extractor config
+    - create initial warehouse db with tenant-id
 5. start a screen session `screen` and start the services (details below in the "manual" section)
 
 
@@ -73,14 +76,15 @@ we have an example flows file; to use it, copy it over your local file after fir
 
 
 ### Docker-screen (postgres, kafka)
-run postgres directly from repo:
+docker containers for kafka and postgres were already started. re-start them later with:
 
-    docker run --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 -d postgres
+    docker start mcm_warehouse
+    docker start mcm_kafka
 
-kafka uses a modified image; it was built before
+get an interactive postgres shell. Use this to create the initial database for your tenant-id
 
-    docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="192.168.209.208" --env ADVERTISED_PORT=9092 mcm-kafka
-
+    docker run -it --rm --link mcm_warehouse:postgres postgres psql -h postgres -U postgres
+    create database mcm-metadata_<TENANTID>;
 
 
 

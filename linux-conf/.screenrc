@@ -15,7 +15,7 @@ terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
 
 chdir mcm-sdos
-screen -t SDOS	    0 ". setenv.sh"
+screen -t SDOS	    0
 
 chdir mcm-bluebox
 screen -t Bluebox	1
