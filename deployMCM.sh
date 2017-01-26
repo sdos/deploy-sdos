@@ -63,7 +63,7 @@ yarn add node-red-node-sqlite node-red-contrib-postgres node-red
 echo "\n\n\n>>>>>>MCM deploy>>>>>>>> deploying Kafka broker"
 git clone https://github.com/timwaizenegger/docker-kafka.git
 cd docker-kafka/
-sudo docker build .
+sudo docker build . -t mcm-kafka
 cd
 
 echo "\n\n\n>>>>>>MCM deploy>>>>>>>> All done!\ configure the Swift backend in: $HOME/mcm-sdos/mcm/sdos/configuration.py"

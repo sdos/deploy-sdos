@@ -62,6 +62,31 @@ you can start the Bluebox service in dev or production mode:
 
 
 
+### NodeRed-screen (Analytics)
+we use the daemontools "supervise" command to run node-red. Node-red seems very unstable so supervise will keep it running.
+
+    supervise mcm-deployEnvironment/nodered-runner
+
+we have an example flows file; to use it, copy it over your local file after first run:
+    
+    cp mcm-deployEnvironment/nodered-examples/flows_mcm-bluebox.json /home/ubuntu/.node-red/flows_<HOSTNAME>.json
+
+
+### Docker-screen (postgres, kafka)
+run postgres directly from repo:
+
+    docker run --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 -d postgres
+
+kafka uses a modified image; it was built before
+
+    docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="192.168.209.208" --env ADVERTISED_PORT=9092 mcm-kafka
+
+
+
+
+
+
+
 ## Swift backend
 MCM is based around the Swift object store; or ar least Swift's REST-API. You may use
 any storage backend that uses the Swift-API like a Swift-Service or Ceph. For the dev-environment we use
@@ -84,31 +109,3 @@ http://docs.openstack.org/developer/swift/development_saio.html
     cd $HOME/swift
     git pull
     sudo python setup.py develop
-
-
-
-## Kafka broker
-we use a kafka broker for communication between the components.
-Any existing broker can be used, the connection just has to be configured in the
-components' config files. For dev we use a local kafka in docker:
-
-    git clone https://github.com/timwaizenegger/docker-kafka.git
-    cd docker-kafka/kafka
-    docker build . 
-    docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="192.168.209.208" --env ADVERTISED_PORT=9092 <ID>
-    
-     
-
-## Metadata warehouse (PostgreSQL RDBMS)
-We use a PostgreSQL relational database as a metadata warehouse. All metadata from swift can be
- replicated to the warehouse in order to perform analyses. For the dev setup, we use postgres in a local docker container:
- 
-    docker run --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 -d postgres
-
-## NodeRed (Analytics)
-we use the daemontools "supervise" command to run node-red. Node-red seems very unstable so supervise will keep it running.
-
-    supervise mcm-deployEnvironment/nodered-runner
-    
-we have an example flows-file for nodered that shows some possible analyses in this repo. To use, simply replace the default flows-file in ".node-red/" with the example.
-
