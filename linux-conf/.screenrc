@@ -18,7 +18,7 @@ screen -t SDOS	    0
 screen -t Bluebox	1
 screen -t retentionM	2
 screen -t metadataEx	3
-screen -t kafka	4
+screen -t docker	4
 screen -t node-red	5
 screen -t shell		6
 screen -t top 		7	top

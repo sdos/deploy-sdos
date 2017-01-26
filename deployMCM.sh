@@ -27,7 +27,23 @@ pip install -r requirements.txt
 cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
 deactivate
 
+
+echo ">>>>>>MCM deploy>>>>>>>> deploying metadataExtractor"
+git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
+cd mcm-metadataExtractor/
+virtualenv venvME
+. setenv.sh
+pip install -r requirements.txt
+cp mcm/metadataExtractor/configuration.example.py mcm/metadataExtractor/configuration.py
+deactivate
+
+
+
 echo ">>>>>>MCM deploy>>>>>>>> deploying Bluebox"
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt-get update
+sudo apt-get install yarn
 cd
 git clone https://github.com/timwaizenegger/mcm-bluebox.git
 cd mcm-bluebox/
@@ -37,7 +53,7 @@ pip install -r requirements.txt
 cd mcm/Bluebox/angular
 yarn install
 cd ../../../
-cp mcm/Bluebox/appConfig.example.py mcm/Bluebox/appConfig.py
+cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
 deactivate
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying Nodered"
@@ -45,4 +61,16 @@ cd
 yarn install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red-contrib-postgres node-red
 
 
-echo ">>>>>>MCM deploy>>>>>>>> All done!\  modify the config files in:\n $HOME/mcm-sdos/mcm/sdos/configuration.py\n $HOME/mcm-bluebox/mcm/Bluebox/appConfig.py"
+echo ">>>>>>MCM deploy>>>>>>>> deploying Kafka broker"
+git clone https://github.com/timwaizenegger/docker-kafka.git
+cd docker-kafka/
+docker build .
+cd
+
+echo ">>>>>>MCM deploy>>>>>>>> All done!\  modify the config files in:\n $HOME/mcm-sdos/mcm/sdos/configuration.py\n $HOME/mcm-metadataExtractor/mcm/metadataExtractor/configuration.py\n $HOME/mcm-bluebox/mcm/Bluebox/configuration.py"
+echo ">>>>>>MCM deploy>>>>>>>> Then start the services"
+echo ">>>>>>MCM deploy>>>>>>>> SDOS: \tcd mcm-sdos/; . setenv.sh; python runService_Development.py"
+echo ">>>>>>MCM deploy>>>>>>>> Bluebox: \tcd mcm-bluebox/; . setenv.sh; python runApp_Development.py"
+echo ">>>>>>MCM deploy>>>>>>>> Nodered: supervise mcm-deployEnvironment/nodered-runner/"
+echo '>>>>>>MCM deploy>>>>>>>> Kafka: docker run -d --name mcm_broker -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="localhost" --env ADVERTISED_PORT=9092 <ID>'
+echo '>>>>>>MCM deploy>>>>>>>> Kafka: docker run -d --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 postgres'
