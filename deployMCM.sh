@@ -28,7 +28,8 @@ echo
 echo ">>>>>>MCM deploy>>>>>>>> deploying SDOS"
 cd
 git clone https://github.com/timwaizenegger/mcm-sdos.git
-cd mcm-sdos/
+cd mcm-sdos
+chmod +x run.sh
 virtualenv venvSDOS
 . setenv.sh
 pip install -r requirements.txt
@@ -42,7 +43,8 @@ echo
 echo ">>>>>>MCM deploy>>>>>>>> deploying metadataExtractor"
 cd
 git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
-cd mcm-metadataExtractor/
+cd mcm-metadataExtractor
+chmod +x run.sh
 virtualenv venvME
 . setenv.sh
 pip install -r requirements.txt
@@ -56,7 +58,8 @@ echo
 echo ">>>>>>MCM deploy>>>>>>>> deploying Bluebox"
 cd
 git clone https://github.com/timwaizenegger/mcm-bluebox.git
-cd mcm-bluebox/
+cd mcm-bluebox
+chmod +x run.sh
 virtualenv venvBB
 . setenv.sh
 pip install -r requirements.txt
