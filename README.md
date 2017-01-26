@@ -68,11 +68,12 @@ you can start the Bluebox service in dev or production mode:
 ### NodeRed-screen (Analytics)
 we use the daemontools "supervise" command to run node-red. Node-red seems very unstable so supervise will keep it running.
 
-    supervise mcm-deployEnvironment/nodered-runner
+    cd mcm-deployEnvironment/nodered-runner
+    supervise .
 
 we have an example flows file; to use it, copy it over your local file after first run:
     
-    cp mcm-deployEnvironment/nodered-examples/flows_mcm-bluebox.json /home/ubuntu/.node-red/flows_<HOSTNAME>.json
+    cp /home/ubuntu/mcm-deployEnvironment/nodered-examples/flows_mcm-bluebox.json /home/ubuntu/.node-red/flows_<HOSTNAME>.json
 
 
 ### Docker-screen (postgres, kafka)

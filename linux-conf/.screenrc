@@ -17,6 +17,7 @@ terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 chdir mcm-sdos
 screen -t SDOS	    0
 
+chdir
 chdir mcm-bluebox
 screen -t Bluebox	1
 
@@ -28,7 +29,11 @@ screen -t metadataEx	3
 
 chdir
 screen -t docker	4
+
+chdir mcm-deployEnvironment/nodered-runner
 screen -t node-red	5
+
+chdir
 screen -t shell		6
 screen -t top 		7	htop
 
