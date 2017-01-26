@@ -19,7 +19,7 @@ sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-d
 pip3 install virtualenv
 
 
-echo ">>>>>>MCM deploy>>>>>>>> deploying SDOS"
+echo "\n\n\n>>>>>>MCM deploy>>>>>>>> deploying SDOS"
 cd
 git clone https://github.com/timwaizenegger/mcm-sdos.git
 cd mcm-sdos/
@@ -30,7 +30,7 @@ cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
 deactivate
 
 
-echo ">>>>>>MCM deploy>>>>>>>> deploying metadataExtractor"
+echo "\n\n\n>>>>>>MCM deploy>>>>>>>> deploying metadataExtractor"
 cd
 git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
 cd mcm-metadataExtractor/
@@ -42,7 +42,7 @@ deactivate
 
 
 
-echo ">>>>>>MCM deploy>>>>>>>> deploying Bluebox"
+echo "\n\n\n>>>>>>MCM deploy>>>>>>>> deploying Bluebox"
 cd
 git clone https://github.com/timwaizenegger/mcm-bluebox.git
 cd mcm-bluebox/
@@ -55,18 +55,18 @@ cd ../../../
 cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
 deactivate
 
-echo ">>>>>>MCM deploy>>>>>>>> deploying Nodered"
+echo "\n\n\n>>>>>>MCM deploy>>>>>>>> deploying Nodered"
 cd
-yarn add node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red-contrib-postgres node-red
+yarn add node-red-node-sqlite node-red-contrib-postgres node-red
 
 
-echo ">>>>>>MCM deploy>>>>>>>> deploying Kafka broker"
+echo "\n\n\n>>>>>>MCM deploy>>>>>>>> deploying Kafka broker"
 git clone https://github.com/timwaizenegger/docker-kafka.git
 cd docker-kafka/
 sudo docker build .
 cd
 
-echo ">>>>>>MCM deploy>>>>>>>> All done!\ configure the Swift backend in: $HOME/mcm-sdos/mcm/sdos/configuration.py"
+echo "\n\n\n>>>>>>MCM deploy>>>>>>>> All done!\ configure the Swift backend in: $HOME/mcm-sdos/mcm/sdos/configuration.py"
 echo ">>>>>>MCM deploy>>>>>>>> All done!\ then set the tenant-ID in: $HOME/mcm-metadataExtractor/mcm/metadataExtractor/configuration.py"
 echo ">>>>>>MCM deploy>>>>>>>> Then start the services"
 echo ">>>>>>MCM deploy>>>>>>>> SDOS: \tcd mcm-sdos/; . setenv.sh; python runService_Development.py"
