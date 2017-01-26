@@ -41,28 +41,29 @@ screen is a window-manager for the shell; it manages multiple shell-windows and 
 start a screen instance, the windows for services will open
 ### SDOS-screen:
 
-    cd mcm-sdos/
-    . setenv.sh    
 modify the config file; set the swift auth/storage URL to the address of your swift endpoint
 
+    cd mcm-sdos/
     vim mcm/sdos/configuration.py
     
 start the SDOS service
 
-    python runService_Development.py
+    ./run.sh
     
     
 ### Bluebox-screen
-switch to the Bluebox screen
 
-    cd mcm-bluebox/
-    . setenv.sh
+    ./run.sh
 
-you can start the Bluebox service in dev or production mode:
 
-* for local development/testing: `python runApp_Development.py`
-* for production: `./runApp_Production.sh`
 
+### MetadataExtractor-screen
+
+set tenant-id in metadata extractor config
+
+start the service
+
+    ./run.sh
 
 
 ### NodeRed-screen (Analytics)

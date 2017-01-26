@@ -92,8 +92,9 @@ echo
 echo ">>>>>>MCM deploy>>>>>>>> All done! configure the Swift backend in: $HOME/mcm-sdos/mcm/sdos/configuration.py"
 echo ">>>>>>MCM deploy>>>>>>>> All done! then set the tenant-ID in: $HOME/mcm-metadataExtractor/mcm/metadataExtractor/configuration.py"
 echo ">>>>>>MCM deploy>>>>>>>> Then start the services"
-echo ">>>>>>MCM deploy>>>>>>>> SDOS: cd mcm-sdos/; . setenv.sh; python runService_Development.py"
-echo ">>>>>>MCM deploy>>>>>>>> Bluebox: cd mcm-bluebox/; . setenv.sh; python runApp_Development.py"
-echo ">>>>>>MCM deploy>>>>>>>> Nodered: supervise mcm-deployEnvironment/nodered-runner/"
+echo ">>>>>>MCM deploy>>>>>>>> SDOS: cd mcm-sdos; ./run.sh"
+echo ">>>>>>MCM deploy>>>>>>>> Bluebox: cd mcm-bluebox; ./run.sh"
+echo ">>>>>>MCM deploy>>>>>>>> Metadata Extractor: cd mcm-bluebox; ./run.sh"
+echo ">>>>>>MCM deploy>>>>>>>> Nodered: cd mcm-deployEnvironment/nodered-runner; supervise ."
 echo '>>>>>>MCM deploy>>>>>>>> Kafka: docker run -d --name mcm_broker -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="localhost" --env ADVERTISED_PORT=9092 <ID>'
 echo '>>>>>>MCM deploy>>>>>>>> Kafka: docker run -d --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 postgres'
