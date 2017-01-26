@@ -11,14 +11,16 @@ echo ">>>>>>MCM deploy>>>>>>>> preparing environment"
 cd
 cp mcm-deployEnvironment/linux-conf/.* .
 source .profile
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt update
 sudo apt dist-upgrade
-sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1
+sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1 yarn docker.io
 pip3 install virtualenv
-npm install yarn
 
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying SDOS"
+cd
 git clone https://github.com/timwaizenegger/mcm-sdos.git
 cd mcm-sdos/
 virtualenv venvSDOS
@@ -29,6 +31,7 @@ deactivate
 
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying metadataExtractor"
+cd
 git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
 cd mcm-metadataExtractor/
 virtualenv venvME
@@ -40,10 +43,6 @@ deactivate
 
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying Bluebox"
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install yarn
 cd
 git clone https://github.com/timwaizenegger/mcm-bluebox.git
 cd mcm-bluebox/
@@ -58,16 +57,17 @@ deactivate
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying Nodered"
 cd
-yarn install node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red-contrib-postgres node-red
+yarn add node-red-node-sqlite node-red-nodes-cf-sqldb-dashdb node-red-contrib-postgres node-red
 
 
 echo ">>>>>>MCM deploy>>>>>>>> deploying Kafka broker"
 git clone https://github.com/timwaizenegger/docker-kafka.git
 cd docker-kafka/
-docker build .
+sudo docker build .
 cd
 
-echo ">>>>>>MCM deploy>>>>>>>> All done!\  modify the config files in:\n $HOME/mcm-sdos/mcm/sdos/configuration.py\n $HOME/mcm-metadataExtractor/mcm/metadataExtractor/configuration.py\n $HOME/mcm-bluebox/mcm/Bluebox/configuration.py"
+echo ">>>>>>MCM deploy>>>>>>>> All done!\ configure the Swift backend in: $HOME/mcm-sdos/mcm/sdos/configuration.py"
+echo ">>>>>>MCM deploy>>>>>>>> All done!\ then set the tenant-ID in: $HOME/mcm-metadataExtractor/mcm/metadataExtractor/configuration.py"
 echo ">>>>>>MCM deploy>>>>>>>> Then start the services"
 echo ">>>>>>MCM deploy>>>>>>>> SDOS: \tcd mcm-sdos/; . setenv.sh; python runService_Development.py"
 echo ">>>>>>MCM deploy>>>>>>>> Bluebox: \tcd mcm-bluebox/; . setenv.sh; python runApp_Development.py"

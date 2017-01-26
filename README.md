@@ -58,7 +58,7 @@ We use a PostgreSQL relational database as a metadata warehouse. All metadata fr
 
 # Automated deployment
 
-1. install an ubuntu VM; 14.04 and 16.04 were tested
+1. install an ubuntu VM; 14.04, 16.04, and 16.10 were tested
 2. clone this repo: `git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git`
 3. run the script: `bash mcm-deployEnvironment/deployMCM.sh`
 4. start a screen session `screen` and start the 3 services (details below in the "manual" section)
