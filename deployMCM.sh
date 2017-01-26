@@ -17,7 +17,7 @@ sudo apt update
 sudo apt dist-upgrade
 sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1 yarn docker.io htop
 pip3 install --upgrade pip
-pip3 install virtualenv
+pip3 install --user virtualenv
 A=$(whoami)
 sudo usermod -a -G docker $A
 
