@@ -9,14 +9,17 @@ FROM ubuntu:latest
 MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
 RUN apt-get update
-RUN apt-get install -y python3-pip
+RUN apt-get install -y python3-pip git
 RUN mkdir /mcm
-RUN cd /mcm
+WORKDIR /mcm
 RUN git clone https://github.com/timwaizenegger/mcm-sdos.git
-RUN cd mcm-sdos
-RUN pip install -r requirements.txt
+WORKDIR mcm-sdos
+RUN pip3 install --upgrade pip
+RUN pip3 install -r requirements.txt
 RUN cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
+
+COPY sdos.sh /mcm
 
 EXPOSE 8000
 
-ENTRYPOINT ["python /mcm/mcm-sdos/_runService_Production.py"]
+ENTRYPOINT ["sdos.sh"]
