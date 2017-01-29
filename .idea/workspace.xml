@@ -11,17 +11,17 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mcm-bluebox/venvBB/bin/python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mcm-sdos/venvSDOS/bin/python" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <created>1480496520303</created>
+      <created>1485432914349</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1480496520303</updated>
+      <updated>1485432914349</updated>
     </task>
     <servers />
   </component>

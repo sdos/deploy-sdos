@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#	Project Bluebox
+#	Project MCM
 #
-#	Copyright (C) <2015> <University of Stuttgart>
+#	Copyright (C) <2015-2017> <University of Stuttgart>
 #
 #	This software may be modified and distributed under the terms
 #	of the MIT license.  See the LICENSE file for details.
