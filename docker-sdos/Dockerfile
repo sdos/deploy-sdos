@@ -16,10 +16,10 @@ RUN git clone https://github.com/timwaizenegger/mcm-sdos.git
 WORKDIR mcm-sdos
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
-RUN cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
 
 COPY sdos.sh /mcm
+COPY configuration.py /mcm/mcm-sdos/mcm/sdos/
 
 EXPOSE 8000
 
-ENTRYPOINT ["sdos.sh"]
+ENTRYPOINT ["/mcm/sdos.sh"]
