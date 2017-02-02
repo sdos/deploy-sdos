@@ -115,3 +115,15 @@ http://docs.openstack.org/developer/swift/development_saio.html
     cd $HOME/swift
     git pull
     sudo python setup.py develop
+
+
+# Docker containers
+## SDOS
+Build a new image (e.g. when you want to use a new GIT copy)
+
+    cd mcm-deployEnvironment/docker-sdos
+    docker build --no-cache . -t sdos_img
+    
+Run the image and specify the endpoints
+
+    docker run -it -p 3000:3000 sdos_img sdos1

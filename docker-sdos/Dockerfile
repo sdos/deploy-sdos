@@ -20,6 +20,6 @@ RUN cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
 
 COPY sdos.sh /mcm
 
-EXPOSE 5000
+EXPOSE 3000
 
 ENTRYPOINT ["/mcm/sdos.sh"]
