@@ -126,4 +126,4 @@ Build a new image (e.g. when you want to use a new GIT copy)
     
 Run the image and specify the endpoints
 
-    docker run -it -p 3000:3000 sdos_img sdos1
+    docker run -it -p 3000:3000 sdos_img --name sdos1
