@@ -83,10 +83,34 @@ echo
 echo
 echo ">>>>>>MCM deploy>>>>>>>> deploying docker containers"
 cd
-sudo docker run -d --name mcm_warehouse -p 5432:5432 --env POSTGRES_PASSWORD=testing postgres
-sudo docker run -d --name mcm_kafka -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="localhost" --env ADVERTISED_PORT=9092 spotify/kafka
+
+sudo docker network create -d bridge --subnet 172.18.0.0/24 sdos-net
 
 
+sudo docker run -d --name mcm_warehouse \
+--network sdos-net --ip="172.18.0.44" \
+-p 5432:5432 \
+--env POSTGRES_PASSWORD=testing \
+postgres
+
+
+sudo docker run -d --name mcm_kafka \
+--network sdos-net --ip="172.18.0.33" \
+--env ADVERTISED_HOST="172.18.0.33" \
+--env ADVERTISED_PORT=9092 \
+spotify/kafka
+
+
+sudo docker run --name mcm_ceph -d \
+--network sdos-net --ip="172.18.0.2" \
+-v /mnt________:/var/lib/ceph \
+-v /etc/ceph:/etc/ceph \
+-e MON_IP=172.18.0.2 \
+-e CEPH_PUBLIC_NETWORK=172.18.0.0/24 \
+-e CEPH_DEMO_UID="sdos" \
+-e CEPH_DEMO_ACCESS_KEY="passw0rd" \
+-e CEPH_DEMO_SECRET_KEY="passw0rd" \
+ceph/demo
 
 
 echo
