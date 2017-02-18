@@ -84,24 +84,40 @@ echo
 echo ">>>>>>MCM deploy>>>>>>>> deploying docker containers"
 cd
 
-sudo docker network create -d bridge --subnet 172.18.0.0/24 sdos-net
+echo ">>>>>>MCM deploy>>>>>>>> create network"
+sudo -s
+
+docker network create -d bridge --subnet 172.18.0.0/24 sdos-net
 
 
-sudo docker run -d --name mcm_warehouse \
+echo ">>>>>>MCM deploy>>>>>>>> start postgresql warehouse"
+docker run -d --name mcm_warehouse \
 --network sdos-net --ip="172.18.0.44" \
 -p 5432:5432 \
---env POSTGRES_PASSWORD=testing \
+--env POSTGRES_PASSWORD="passw0rd" \
 postgres
 
+docker exec -it mcm_warehouse psql -U postgres -c "create database mcm_metadata_mcmdemo;"
 
-sudo docker run -d --name mcm_kafka \
+
+echo ">>>>>>MCM deploy>>>>>>>> start nodered analytics"
+docker run -d --name mcm_nodered \
+--network sdos-net --ip="172.18.0.55" \
+nodered/node-red-docker
+
+
+
+echo ">>>>>>MCM deploy>>>>>>>> start kafka message broker"
+docker run -d --name mcm_kafka \
 --network sdos-net --ip="172.18.0.33" \
 --env ADVERTISED_HOST="172.18.0.33" \
 --env ADVERTISED_PORT=9092 \
 spotify/kafka
 
 
-sudo docker run --name mcm_ceph -d \
+
+echo ">>>>>>MCM deploy>>>>>>>> start ceph object store"
+docker run --name mcm_ceph -d \
 --network sdos-net --ip="172.18.0.2" \
 -v /mnt________:/var/lib/ceph \
 -v /etc/ceph:/etc/ceph \
@@ -112,6 +128,16 @@ sudo docker run --name mcm_ceph -d \
 -e CEPH_DEMO_SECRET_KEY="passw0rd" \
 ceph/demo
 
+docker exec -it cephtest radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
+docker exec -it cephtest radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
+
+
+
+
+
+
+
+exit
 
 echo
 echo
