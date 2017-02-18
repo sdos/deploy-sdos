@@ -6,10 +6,15 @@
 #	This software may be modified and distributed under the terms
 #	of the MIT license.  See the LICENSE file for details.
 
-cd /mcm/mcm-sdos/
+cd /mcm/mcm-bluebox/
 git pull
-export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sdos/mcm
-pip3 install -r requirements.txt
+export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sbluebox/mcm
+
+pip install -r requirements.txt
+cd mcm/Bluebox/angular
+npm install
+cd ../../../
 
 
-python3 _runService_Production.py
+
+./_runApp_Production.sh

@@ -6,10 +6,10 @@
 #	This software may be modified and distributed under the terms
 #	of the MIT license.  See the LICENSE file for details.
 
-cd /mcm/mcm-sdos/
+cd /mcm/mcm-metadataExtractor/
 git pull
-export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sdos/mcm
+export PYTHONPATH=$PYTHONPATH:/mcm/mcm-metadataExtractor/mcm
 pip3 install -r requirements.txt
 
 
-python3 _runService_Production.py
+python3 _runListener.py

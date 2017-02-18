@@ -11,72 +11,12 @@ echo ">>>>>>MCM deploy>>>>>>>> preparing environment"
 cd
 cp mcm-deployEnvironment/linux-conf/.* .
 source .profile
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt update
 sudo apt dist-upgrade
-sudo apt install -y npm nodejs-legacy screen python3-pip git daemontools libpq-dev librdkafka1 yarn docker.io htop tpm-tools libtspi-dev libopencryptoki-dev libssl-dev
-pip3 install --upgrade pip
-pip3 install --user virtualenv
+sudo apt install -y screen python3-pip git docker.io htop tpm-tools libtspi-dev libopencryptoki-dev libssl-dev
+
 A=$(whoami)
 sudo usermod -a -G docker $A
-
-
-echo
-echo
-echo
-echo ">>>>>>MCM deploy>>>>>>>> deploying SDOS"
-cd
-git clone https://github.com/timwaizenegger/mcm-sdos.git
-cd mcm-sdos
-chmod +x run.sh
-virtualenv venvSDOS
-. setenv.sh
-pip install -r requirements.txt
-cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
-deactivate
-
-
-echo
-echo
-echo
-echo ">>>>>>MCM deploy>>>>>>>> deploying metadataExtractor"
-cd
-git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
-cd mcm-metadataExtractor
-chmod +x run.sh
-virtualenv venvME
-. setenv.sh
-pip install -r requirements.txt
-cp mcm/metadataExtractor/configuration.example.py mcm/metadataExtractor/configuration.py
-deactivate
-
-
-echo
-echo
-echo
-echo ">>>>>>MCM deploy>>>>>>>> deploying Bluebox"
-cd
-git clone https://github.com/timwaizenegger/mcm-bluebox.git
-cd mcm-bluebox
-chmod +x run.sh
-virtualenv venvBB
-. setenv.sh
-pip install -r requirements.txt
-cd mcm/Bluebox/angular
-yarn install
-cd ../../../
-cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
-deactivate
-
-
-echo
-echo
-echo
-echo ">>>>>>MCM deploy>>>>>>>> deploying Nodered"
-cd
-yarn add node-red-node-sqlite node-red-contrib-postgres node-red
-
 
 echo
 echo
@@ -105,6 +45,10 @@ docker run -d --name mcm_nodered \
 --network sdos-net --ip="172.18.0.55" \
 nodered/node-red-docker
 
+docker exec -it mcm_nodered \
+npm install node-red-node-sqlite node-red-contrib-postgres
+
+docker restart mcm_nodered
 
 
 echo ">>>>>>MCM deploy>>>>>>>> start kafka message broker"
@@ -118,10 +62,10 @@ spotify/kafka
 
 echo ">>>>>>MCM deploy>>>>>>>> start ceph object store"
 docker run --name mcm_ceph -d \
---network sdos-net --ip="172.18.0.2" \
+--network sdos-net --ip="172.18.0.22" \
 -v /mnt________:/var/lib/ceph \
 -v /etc/ceph:/etc/ceph \
--e MON_IP=172.18.0.2 \
+-e MON_IP=172.18.0.22 \
 -e CEPH_PUBLIC_NETWORK=172.18.0.0/24 \
 -e CEPH_DEMO_UID="sdos" \
 -e CEPH_DEMO_ACCESS_KEY="passw0rd" \
@@ -133,8 +77,35 @@ docker exec -it cephtest radosgw-admin key create --subuser=sdos:user --key-type
 
 
 
+echo
+echo
+echo
+echo ">>>>>>MCM deploy>>>>>>>> deploying docker containers for MCM services"
+cd docker-sdos
+docker build . -t mcm/sdos
+cd
+
+docker run --name mcm_sdos -d \
+--network sdos-net --ip="172.18.0.11" \
+mcm/sdos
 
 
+cd docker-bluebox
+docker build . -t mcm/bluebox
+cd
+
+docker run --name mcm_bluebox -d \
+--network sdos-net --ip="172.18.0.100" \
+mcm/bluebox
+
+
+cd docker-extractor
+docker build . -t mcm/extractor
+cd
+
+docker run --name mcm_extractor -d \
+--network sdos-net --ip="172.18.0.200" \
+mcm/extractor
 
 
 exit
@@ -142,12 +113,4 @@ exit
 echo
 echo
 echo
-echo ">>>>>>MCM deploy>>>>>>>> All done! configure the Swift backend in: $HOME/mcm-sdos/mcm/sdos/configuration.py"
-echo ">>>>>>MCM deploy>>>>>>>> All done! then set the tenant-ID in: $HOME/mcm-metadataExtractor/mcm/metadataExtractor/configuration.py"
-echo ">>>>>>MCM deploy>>>>>>>> Then start the services"
-echo ">>>>>>MCM deploy>>>>>>>> SDOS: cd mcm-sdos; ./run.sh"
-echo ">>>>>>MCM deploy>>>>>>>> Bluebox: cd mcm-bluebox; ./run.sh"
-echo ">>>>>>MCM deploy>>>>>>>> Metadata Extractor: cd mcm-bluebox; ./run.sh"
-echo ">>>>>>MCM deploy>>>>>>>> Nodered: cd mcm-deployEnvironment/nodered-runner; supervise ."
-echo '>>>>>>MCM deploy>>>>>>>> Kafka: docker run -d --name mcm_broker -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST="localhost" --env ADVERTISED_PORT=9092 <ID>'
-echo '>>>>>>MCM deploy>>>>>>>> Kafka: docker run -d --name mcm_warehouse -e POSTGRES_PASSWORD=testing -p 5432:5432 postgres'
+echo ">>>>>>MCM deploy>>>>>>>> All done!"

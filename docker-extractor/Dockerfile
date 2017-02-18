@@ -10,16 +10,18 @@ MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
 RUN apt-get update
 RUN apt-get dist-upgrade -y
-RUN apt-get install -y python3-pip git tpm-tools libtspi-dev libopencryptoki-dev libssl-dev
+
+RUN apt-get install -y npm nodejs-legacy python3-pip git libpq-dev librdkafka1
+RUN pip3 install --upgrade pip
+
 
 RUN mkdir /mcm
 WORKDIR /mcm
-RUN git clone https://github.com/timwaizenegger/mcm-sdos.git
-WORKDIR mcm-sdos
-RUN cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
+RUN git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
+WORKDIR mcm-metadataExtractor
+RUN cp mcm/metadataExtractor/configuration.example.py mcm/metadataExtractor/configuration.py
 
-COPY sdos.sh /mcm
 
-EXPOSE 3000
+COPY extractor.sh /mcm
 
-ENTRYPOINT ["/mcm/sdos.sh"]
+ENTRYPOINT ["/mcm/extractor.sh"]
