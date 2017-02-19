@@ -1,0 +1,83 @@
+version: '3'
+
+# to later configure ceph:
+# docker-compose exec ceph radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
+# docker-compose exec ceph radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
+
+# docker-compose exec nodered npm install node-red-node-sqlite node-red-contrib-postgres
+
+# access 172.18.0.100:8000
+
+
+networks:
+  sdosnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+
+services:
+  sdos:
+    build: ./docker-sdos
+    image: mcm/sdos
+    networks:
+      sdosnet:
+        ipv4_address: 172.18.0.11
+
+  bluebox:
+    build: ./docker-bluebox
+    image: mcm/bluebox
+    networks:
+      sdosnet:
+        ipv4_address: 172.18.0.100
+
+  extractor:
+    build: ./docker-extractor
+    image: mcm/extractor
+    networks:
+      - sdosnet
+
+
+
+####### ceph storage backend
+  ceph:
+    image: ceph/demo
+    #volumes:
+      #- /mnt________:/var/lib/ceph
+      #- /etc/ceph:/etc/ceph
+    environment:
+      - MON_IP="172.18.0.22"
+      - CEPH_PUBLIC_NETWORK="172.18.0.0/24"
+      - CEPH_DEMO_UID="sdos"
+      - CEPH_DEMO_ACCESS_KEY="passw0rd"
+      - CEPH_DEMO_SECRET_KEY="passw0rd"
+    networks:
+      sdosnet:
+        ipv4_address: 172.18.0.22
+
+####### external images for db/messaging/nodered
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD="passw0rd"
+      - POSTGRES_DB="mcm_metadata_mcmdemo"
+    networks:
+      sdosnet:
+        ipv4_address: 172.18.0.44
+  kafka:
+    image: spotify/kafka
+    environment:
+      - ADVERTISED_HOST=172.18.0.33
+      - ADVERTISED_PORT=9092
+    networks:
+      sdosnet:
+        ipv4_address: 172.18.0.33
+
+  nodered:
+    image: nodered/node-red-docker
+    networks:
+      sdosnet:
+        ipv4_address: 172.18.0.55
+
+
+
