@@ -51,8 +51,6 @@ services:
   swift:
     build: ./docker-swift/docker-swift-onlyone
     image: mcm/swift
-    ports:
-      - 80:8080
     volumes:
       - /tmp/mcm_swift:/srv
     networks:
