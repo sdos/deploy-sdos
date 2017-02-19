@@ -12,7 +12,6 @@ deploy and setup all the MCM/SDOS components to get a working system
 
 
 # Docker compose based all-in-one demo system
-## SDOS
 * either run `./deployMCM_docker.sh`
 * or use `docker-compose`:
 

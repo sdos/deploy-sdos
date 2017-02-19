@@ -20,6 +20,8 @@ services:
   sdos:
     build: ./docker-sdos
     image: mcm/sdos
+    environment:
+      - MY_ENDPOINT_HOST="172.18.0.11"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.11
@@ -48,7 +50,7 @@ services:
     environment:
       - MON_IP=172.18.0.22
       - CEPH_PUBLIC_NETWORK=172.18.0.0/24
-      - CEPH_DEMO_UID="sdos"
+      - CEPH_DEMO_UID=sdos
       - CEPH_DEMO_ACCESS_KEY="passw0rd"
       - CEPH_DEMO_SECRET_KEY="passw0rd"
     networks:
