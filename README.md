@@ -11,7 +11,32 @@ deploy and setup all the MCM/SDOS components to get a working system
 
 
 
-# Automated deployment
+# Docker compose based all-in-one demo system
+## SDOS
+* either run `./deployMCM_docker.sh`
+* or use `docker-compose`:
+
+install docker/docker compose (if not present)
+
+    git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git
+    cd mcm-deployEnvironment
+    docker-compose up
+
+    docker-compose exec ceph radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
+    docker-compose exec ceph radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
+
+note the swit secret and visit
+
+    http://172.18.0.100:8000
+
+    tenant: sdos
+    user: user
+    pass: passw0rd
+
+
+
+
+# Automated deployment for Development setup
 
 1. install an ubuntu VM; 14.04, 16.04, and 16.10 were tested
 2. clone this repo: `git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git`
@@ -116,14 +141,3 @@ http://docs.openstack.org/developer/swift/development_saio.html
     git pull
     sudo python setup.py develop
 
-
-# Docker containers
-## SDOS
-Build a new image (e.g. when you want to use a new GIT copy)
-
-    cd mcm-deployEnvironment/docker-sdos
-    docker build --no-cache . -t sdos_img
-    
-Run the image and specify the endpoints
-
-    docker run -it -p 3000:3000 sdos_img --name sdos1

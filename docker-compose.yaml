@@ -46,8 +46,8 @@ services:
       #- /mnt________:/var/lib/ceph
       #- /etc/ceph:/etc/ceph
     environment:
-      - MON_IP="172.18.0.22"
-      - CEPH_PUBLIC_NETWORK="172.18.0.0/24"
+      - MON_IP=172.18.0.22
+      - CEPH_PUBLIC_NETWORK=172.18.0.0/24
       - CEPH_DEMO_UID="sdos"
       - CEPH_DEMO_ACCESS_KEY="passw0rd"
       - CEPH_DEMO_SECRET_KEY="passw0rd"
@@ -60,7 +60,7 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD="passw0rd"
-      - POSTGRES_DB="mcm_metadata_mcmdemo"
+      - POSTGRES_DB=mcm_metadata_mcmdemo
     networks:
       sdosnet:
         ipv4_address: 172.18.0.44
