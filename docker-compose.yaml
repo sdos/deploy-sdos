@@ -33,6 +33,8 @@ services:
   bluebox:
     build: ./docker-bluebox
     image: mcm/bluebox
+    ports:
+      - "80:8000"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.100
