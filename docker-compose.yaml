@@ -1,9 +1,5 @@
 version: '3'
 
-# to later configure ceph:
-# docker-compose exec ceph radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
-# docker-compose exec ceph radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
-
 # docker-compose exec nodered npm install node-red-node-sqlite node-red-contrib-postgres
 
 # access 172.18.0.100:8000
@@ -26,6 +22,8 @@ services:
       - SWIFT_AUTH_PORT=8080
       - SWIFT_STORE_HOST=172.18.0.22
       - SWIFT_STORE_PORT=8080
+    ports:
+      - "3000:3000"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.11
@@ -71,6 +69,9 @@ services:
         ipv4_address: 172.18.0.22
 
 ####### ceph storage backend
+# to later configure ceph:
+# docker-compose exec ceph radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
+# docker-compose exec ceph radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
 #  ceph:
 #    image: ceph/demo
 #    #volumes:
@@ -92,6 +93,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=passw0rd
       - POSTGRES_DB=mcm_metadata_mcmdemo
+    ports:
+      - "5432:5432"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.44
@@ -100,6 +103,8 @@ services:
     environment:
       - ADVERTISED_HOST=172.18.0.33
       - ADVERTISED_PORT=9092
+    ports:
+      - "9092:9092"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.33
