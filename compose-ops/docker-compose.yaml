@@ -1,0 +1,43 @@
+version: '3'
+
+# additional operations tools for mcm
+
+networks:
+  default:
+    external:
+      name: mcmdeployenvironment_sdosnet
+
+
+
+services:
+
+####### ceph storage backend
+# to later configure ceph:
+# docker-compose exec ceph radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
+# docker-compose exec ceph radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
+#  ceph:
+#    image: ceph/demo
+#    #volumes:
+#      #- /mnt________:/var/lib/ceph
+#      #- /etc/ceph:/etc/ceph
+#    environment:
+#      - MON_IP=172.18.0.22
+#      - CEPH_PUBLIC_NETWORK=172.18.0.0/24
+#      - CEPH_DEMO_UID=sdos
+#      - CEPH_DEMO_ACCESS_KEY="passw0rd"
+#      - CEPH_DEMO_SECRET_KEY="passw0rd"
+#    networks:
+#      sdosnet:
+#        ipv4_address: 172.18.0.22
+
+####### external images for db/messaging/nodered
+
+
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    environment:
+      - APPLICATION_SECRET=passw0rd
+      - ZK_HOSTS=172.18.0.33:2181
+    ports:
+      - "9000:9000"
+
