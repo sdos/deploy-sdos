@@ -64,6 +64,8 @@ services:
     image: mcm/swift
     volumes:
       - /tmp/mcm_swift:/srv
+    ports:
+      - "8080:8080"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.22
