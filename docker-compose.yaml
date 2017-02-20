@@ -33,6 +33,12 @@ services:
   bluebox:
     build: ./docker-bluebox
     image: mcm/bluebox
+    environment:
+      - SWIFT_HOST=172.18.0.11
+      - SWIFT_PORT=3000
+      - KAFKA_HOST=172.18.0.33
+      - POSTGRES_HOST=172.18.0.44
+      - NODERED_HOST=172.18.0.55
     ports:
       - "8000:8000"
     networks:
@@ -42,6 +48,11 @@ services:
   extractor:
     build: ./docker-extractor
     image: mcm/extractor
+    environment:
+      - SWIFT_HOST=172.18.0.11
+      - SWIFT_PORT=3000
+      - KAFKA_HOST=172.18.0.33
+      - POSTGRES_HOST=172.18.0.44
     networks:
       - sdosnet
 
