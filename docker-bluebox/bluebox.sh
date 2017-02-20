@@ -16,5 +16,9 @@ npm install
 cd ../../../
 
 
+# run as a flask multithread app
+python _runApp_Development.py
 
-./_runApp_Production.sh
+# pyKafka messaging doesn't work right on gunicorn...
+# only use this if you don't need the message view
+# ./_runApp_Production.sh
