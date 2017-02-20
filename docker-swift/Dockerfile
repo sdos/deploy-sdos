@@ -5,7 +5,7 @@ RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository cloud-archive:mitaka
 RUN apt-get update
-RUN apt-get dist-upgrade
+RUN apt-get dist-upgrade -y
 RUN apt-get install -y supervisor swift python-swiftclient rsync \
                        swift-proxy swift-object memcached python-keystoneclient \
                        python-swiftclient swift-plugin-s3 python-netifaces \
