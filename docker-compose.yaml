@@ -34,7 +34,7 @@ services:
     build: ./docker-bluebox
     image: mcm/bluebox
     ports:
-      - "80:8000"
+      - "8000:8000"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.100
@@ -95,6 +95,8 @@ services:
 
   nodered:
     image: nodered/node-red-docker
+    ports:
+      - "1880:1880"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.55
