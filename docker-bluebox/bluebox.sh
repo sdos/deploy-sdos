@@ -17,7 +17,7 @@ cd ../../../
 
 
 # run as a flask multithread app
-python _runApp_Development_nodebug.py
+python3 _runApp_Development_nodebug.py
 
 # pyKafka messaging doesn't work right on gunicorn...
 # only use this if you don't need the message view
