@@ -51,7 +51,7 @@ services:
 
 ####### swift storage backend
   swift:
-    build: ./docker-swift/docker-swift-onlyone
+    build: ./docker-swift
     image: mcm/swift
     volumes:
       - /tmp/mcm_swift:/srv
