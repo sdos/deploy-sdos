@@ -12,25 +12,49 @@ deploy and setup all the MCM/SDOS components to get a working system
 
 
 # Docker compose based all-in-one demo system
-* either run `./deployMCM_docker.sh`
-* or use `docker-compose`:
+### Install individual container:
+run `./deployMCM_docker.sh`
 
-install docker/docker compose (if not present)
+### Docker Compose
+* prepare environment.
+This deployment includes a container for the Swift object store. This container needs an external volume for swift, by default this is
+ mapped to `/tmp/mcm_swift`. For production/benchmark you should use a dedicated xfs partition
+
+
+    sudo mkfs.xfs /dev/X
+    sudo mount /dev/X /mnt -o noatime,nodiratime,nobarrier,logbufs=8
+
+then in docker-compose.yaml, swift section replace `- /tmp/mcm_swift:/srv` with:
+
+    -v /mnt:/srv
+
+
+* install docker/docker compose (if not present)
+
 
     git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git
     cd mcm-deployEnvironment
     docker-compose up
 
-    docker-compose exec ceph radosgw-admin subuser create --uid=sdos --subuser=sdos:user --access=full
-    docker-compose exec ceph radosgw-admin key create --subuser=sdos:user --key-type=swift --gen-secret
 
-note the swit secret and visit
+* once finished, visit
+
 
     http://172.18.0.100:8000
 
-    tenant: sdos
+    tenant: mcmdemo
     user: user
     pass: passw0rd
+    
+    
+### Issues
+if docker can't access the internet, often the issue is that the local network only allows its own DNS servers.
+Check what hosts your local DNS uses and enter them:
+
+    /etc/docker/daemon.json
+    {
+    "dns": ["129.69.216.2", "129.69.211.1", "8.8.8.8"]
+    }
 
 
 
