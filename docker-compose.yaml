@@ -32,7 +32,7 @@ services:
     build: ./docker-bluebox
     image: mcm/bluebox
     environment:
-      - MY_ENDPOINT_HOST=`hostname`
+      - MY_ENDPOINT_HOST=${PUBLIC_HOST:-localhost}
       - SWIFT_HOST=172.18.0.11
       - SWIFT_PORT=3000
       - KAFKA_HOST=172.18.0.33
@@ -64,7 +64,7 @@ services:
     build: ./docker-swift
     image: mcm/swift
     volumes:
-      - /tmp/mcm_swift:/srv
+      - ${SWIFT_STORE_PATH:-/tmp/mcm_swift}:/srv
     ports:
       - "8080:8080"
     networks:
