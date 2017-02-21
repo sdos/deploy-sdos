@@ -32,6 +32,7 @@ services:
     build: ./docker-bluebox
     image: mcm/bluebox
     environment:
+      - MY_ENDPOINT_HOST=`hostname`
       - SWIFT_HOST=172.18.0.11
       - SWIFT_PORT=3000
       - KAFKA_HOST=172.18.0.33
