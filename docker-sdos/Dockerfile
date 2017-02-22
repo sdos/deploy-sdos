@@ -8,9 +8,6 @@
 FROM python:3.6
 MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
-#RUN apt-get updat
-#RUN apt-get dist-upgrade -y
-#RUN apt-get install -y python3-pip git tpm-tools libtspi-dev libopencryptoki-dev libssl-dev
 
 RUN mkdir /mcm
 WORKDIR /mcm
