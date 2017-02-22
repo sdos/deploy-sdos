@@ -108,6 +108,7 @@ services:
       - ADVERTISED_PORT=9092
     ports:
       - "9092:9092"
+      - "2181:2181"
     networks:
       sdosnet:
         ipv4_address: 172.18.0.33
