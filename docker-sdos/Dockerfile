@@ -5,12 +5,12 @@
 #	This software may be modified and distributed under the terms
 #	of the MIT license.  See the LICENSE file for details.
 
-FROM ubuntu:latest
+FROM python:3.6
 MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
-RUN apt-get update
-RUN apt-get dist-upgrade -y
-RUN apt-get install -y python3-pip git tpm-tools libtspi-dev libopencryptoki-dev libssl-dev
+#RUN apt-get updat
+#RUN apt-get dist-upgrade -y
+#RUN apt-get install -y python3-pip git tpm-tools libtspi-dev libopencryptoki-dev libssl-dev
 
 RUN mkdir /mcm
 WORKDIR /mcm

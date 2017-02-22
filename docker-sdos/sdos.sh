@@ -9,7 +9,7 @@
 cd /mcm/mcm-sdos/
 git pull
 export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sdos/mcm
-pip3 install -r requirements.txt
+pip install -r requirements-min.txt
 
 
-python3 _runService_Production.py
+python _runService_Production.py
