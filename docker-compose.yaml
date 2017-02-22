@@ -120,7 +120,7 @@ services:
       - sdosnet
 
   nodered:
-    image: nodered/node-red-docker
+    build: ./docker-nodered
     ports:
       - "1880:1880"
     networks:
