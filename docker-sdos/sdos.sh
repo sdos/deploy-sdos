@@ -9,7 +9,6 @@
 cd /mcm/mcm-sdos/
 git pull
 export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sdos/mcm
-pip install -r requirements-min.txt
 
 
 python _runService_Production.py

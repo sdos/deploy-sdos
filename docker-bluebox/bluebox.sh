@@ -10,14 +10,8 @@ cd /mcm/mcm-bluebox/
 git pull
 export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sbluebox/mcm
 
-pip install -r requirements.txt
-cd mcm/Bluebox/angular
-npm install
-cd ../../../
-
-
 # run as a flask multithread app
-python3 _runApp_Development_nodebug.py
+python _runApp_Development_nodebug.py
 
 # pyKafka messaging doesn't work right on gunicorn...
 # only use this if you don't need the message view
