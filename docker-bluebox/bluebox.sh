@@ -10,9 +10,12 @@ cd /mcm/mcm-bluebox/
 git pull
 export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sbluebox/mcm
 
-# run as a flask multithread app
-python _runApp_Development_nodebug.py
 
+
+# there are 2 configured runtimes: a) flask development server, b) gunicorn production server
+
+# run as a flask multithread app
+#python _runApp_Development_nodebug.py
 
 # run in a gunicorn multiprocessed server
 ./_runApp_Gunicorn.sh
