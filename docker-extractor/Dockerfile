@@ -5,20 +5,15 @@
 #	This software may be modified and distributed under the terms
 #	of the MIT license.  See the LICENSE file for details.
 
-FROM ubuntu:latest
+FROM python:3.6
 MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
-
-RUN apt-get update
-RUN apt-get dist-upgrade -y
-
-RUN apt-get install -y npm nodejs-legacy python3-pip git libpq-dev librdkafka1
-RUN pip3 install --upgrade pip
 
 
 RUN mkdir /mcm
 WORKDIR /mcm
 RUN git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
 WORKDIR mcm-metadataExtractor
+RUN pip install -r requirements.txt
 RUN cp mcm/metadataExtractor/configuration.example.py mcm/metadataExtractor/configuration.py
 
 

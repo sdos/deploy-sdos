@@ -9,7 +9,6 @@
 cd /mcm/mcm-metadataExtractor/
 git pull
 export PYTHONPATH=$PYTHONPATH:/mcm/mcm-metadataExtractor/mcm
-pip3 install -r requirements.txt
 
 
-python3 _runListener.py
+python _runListener.py
