@@ -49,6 +49,7 @@ services:
     build: ./docker-extractor
     image: mcm/extractor
     environment:
+      - TENANT_NAME=${TENANT_NAME:-mcmdemo}
       - SWIFT_HOST=172.18.0.11
       - SWIFT_PORT=3000
       - KAFKA_HOST=172.18.0.33
@@ -96,7 +97,7 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=passw0rd
-      - POSTGRES_DB=mcm_metadata_mcmdemo
+      - POSTGRES_DB=mcm_metadata_${TENANT_NAME:-mcmdemo}
     ports:
       - "5432:5432"
     networks:
