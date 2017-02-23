@@ -122,7 +122,7 @@ services:
       - sdosnet
 
   nodered:
-    build: ./docker-nodered
+    build: https://github.com/timwaizenegger/node-red-docker.git#:latest
     ports:
       - "1880:1880"
     networks:
