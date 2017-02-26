@@ -41,3 +41,12 @@ services:
     ports:
       - "9000:9000"
 
+  postgres-manager:
+  # http://localhost:9090/phppgadmin
+    build: https://github.com/timwaizenegger/docker-phppgadmin.git
+    #environment:
+      #- POSTGRES_HOST=172.18.0.44
+      #- POSTGRES_PORT=5432
+      #- POSTGRES_DEFAULTDB=mcm_metadata_${TENANT_NAME:-mcmdemo}
+    ports:
+      - "9090:80"
