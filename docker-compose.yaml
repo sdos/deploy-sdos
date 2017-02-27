@@ -34,7 +34,7 @@ services:
     image: mcm/bluebox
     environment:
       - MY_ENDPOINT_HOST=${PUBLIC_HOST:-localhost}
-      - SWIFT_AUTH_VERSION=1.0
+      - SWIFT_AUTH_VERSION=${SWIFT_AUTH_VERSION:-1.0}
       - SWIFT_HOST=172.18.0.11
       - SWIFT_PORT=3000
       - POSTGRES_HOST=172.18.0.44
