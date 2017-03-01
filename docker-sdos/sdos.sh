@@ -11,4 +11,8 @@ git pull
 export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sdos/mcm
 
 
-python _runService_Production.py
+# run as a flask multithread app
+#python _runService_Production.py
+
+# run in a gunicorn (multiprocessed) server
+./_runApp_Gunicorn.sh
