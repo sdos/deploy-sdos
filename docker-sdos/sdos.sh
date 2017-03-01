@@ -15,4 +15,4 @@ export PYTHONPATH=$PYTHONPATH:/mcm/mcm-sdos/mcm
 #python _runService_Production.py
 
 # run in a gunicorn (multiprocessed) server
-./_runApp_Gunicorn.sh
+./_runService_Gunicorn.sh
