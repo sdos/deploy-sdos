@@ -17,7 +17,7 @@ RUN apt-get install -y nodejs yarn
 
 RUN mkdir /mcm
 WORKDIR /mcm
-RUN git clone https://github.com/timwaizenegger/mcm-bluebox.git
+RUN git clone https://github.com/sdos/bluebox-webui.git
 WORKDIR mcm-bluebox
 RUN pip install -r requirements.txt
 WORKDIR mcm/Bluebox/angular

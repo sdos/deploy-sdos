@@ -115,14 +115,14 @@ services:
       sdosnet:
         ipv4_address: 172.18.0.33
   msg_spooler:
-    build: https://github.com/timwaizenegger/kafka-websocket.git
+    build: https://github.com/sdos/kafka-websocket.git
     ports:
       - "7080:7080"
     networks:
       - sdosnet
 
   nodered:
-    build: https://github.com/timwaizenegger/node-red-docker.git#:latest
+    build: https://github.com/sdos/node-red-docker.git#:latest
     ports:
       - "1880:1880"
     networks:

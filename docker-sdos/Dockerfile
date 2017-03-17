@@ -11,7 +11,7 @@ MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
 RUN mkdir /mcm
 WORKDIR /mcm
-RUN git clone https://github.com/timwaizenegger/mcm-sdos.git
+RUN git clone https://github.com/sdos/sdos-core.git
 WORKDIR mcm-sdos
 RUN pip install -r requirements-min.txt
 RUN cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py

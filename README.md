@@ -1,43 +1,33 @@
-# mcm-deployEnvironment
-deploy and setup all the MCM/SDOS components to get a working system
+# deploy an SDOS demo system
+in this repo you can find scripts/tools to set up a complete demo environment including backend storage
 
-
-### The other parts of the MCM project are
-* [-- Deploy Environment (set up everything) --](https://github.com/timwaizenegger/mcm-deployEnvironment)
-* [Bluebox web-UI](https://github.com/timwaizenegger/mcm-bluebox)
-* [SDOS (Secure Delete Object Store) Cryptographic Deletion](https://github.com/timwaizenegger/mcm-sdos)
-* [Metadata Extractor](https://github.com/timwaizenegger/mcm-metadataExtractor)
-* [Retention Manager](https://github.com/timwaizenegger/mcm-retentionManager)
+The easiest option is to use docker-compose
 
 
 
 # Docker compose based all-in-one demo system
-### Install individual container:
-run `./deployMCM_docker.sh`
+I recommend you install docker and docker-compose manually from the docker.io website. You can use the docker version that comes with your linux distro but it might be outdated and not work.
 
-### Docker Compose
-* prepare environment.
+#### prepare storage
 This deployment includes a container for the Swift object store. This container needs an external volume for swift, by default this is
- mapped to `/tmp/mcm_swift`. For production/benchmark you should use a dedicated xfs partition
+ mapped to `/tmp/mcm_swift`. For production/benchmark you should use a dedicated xfs partition:
 
 
     sudo mkfs.xfs /dev/X
     sudo mount /dev/X /mnt -o noatime,nodiratime,nobarrier,logbufs=8
 
-then in docker-compose.yaml, swift section replace `- /tmp/mcm_swift:/srv` with:
-
-    -v /mnt:/srv
+then in docker-compose.yaml, swift section replace `- /tmp/mcm_swift:/srv` with `-v /mnt:/srv`
 
 
-* install docker/docker compose (if not present)
+#### run docker-compose
 
 
-    git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git
-    cd mcm-deployEnvironment
+    git clone https://github.com/sdos/deploy-sdos.git
+    cd deploy-sdos
     docker-compose up
 
 
-* once finished, visit
+once finished, visit
 
 
     http://172.18.0.100:8000

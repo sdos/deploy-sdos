@@ -11,7 +11,7 @@ MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
 RUN mkdir /mcm
 WORKDIR /mcm
-RUN git clone https://github.com/timwaizenegger/mcm-metadataExtractor.git
+RUN git clone https://github.com/sdos/metadata-extractor.git
 WORKDIR mcm-metadataExtractor
 RUN pip install -r requirements.txt
 RUN cp mcm/metadataExtractor/configuration.example.py mcm/metadataExtractor/configuration.py
