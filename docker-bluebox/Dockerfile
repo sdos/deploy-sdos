@@ -15,18 +15,18 @@ RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get install -y nodejs yarn
 
-RUN mkdir /mcm
-WORKDIR /mcm
 RUN git clone https://github.com/sdos/bluebox-webui.git
-WORKDIR mcm-bluebox
+WORKDIR bluebox-webui
+
+RUN cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
+
 RUN pip install -r requirements.txt
 WORKDIR mcm/Bluebox/angular
 RUN yarn install
-WORKDIR /mcm/mcm-bluebox
-RUN cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
 
-COPY bluebox.sh /mcm
+
+COPY bluebox.sh /
 
 EXPOSE 8000
 
-ENTRYPOINT ["/mcm/bluebox.sh"]
+ENTRYPOINT ["/bluebox.sh"]

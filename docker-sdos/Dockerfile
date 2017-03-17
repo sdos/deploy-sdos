@@ -9,15 +9,13 @@ FROM python:3.6
 MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
 
-RUN mkdir /mcm
-WORKDIR /mcm
 RUN git clone https://github.com/sdos/sdos-core.git
-WORKDIR mcm-sdos
+WORKDIR sdos-core
 RUN pip install -r requirements-min.txt
 RUN cp mcm/sdos/configuration.example.py mcm/sdos/configuration.py
 
-COPY sdos.sh /mcm
+COPY sdos.sh /
 
 EXPOSE 3000
 
-ENTRYPOINT ["/mcm/sdos.sh"]
+ENTRYPOINT ["/sdos.sh"]

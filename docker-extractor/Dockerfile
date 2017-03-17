@@ -8,15 +8,12 @@
 FROM python:3.6
 MAINTAINER Tim Waizenegger <tim.waizenegger@ipvs.uni-stuttgart.de>
 
-
-RUN mkdir /mcm
-WORKDIR /mcm
 RUN git clone https://github.com/sdos/metadata-extractor.git
-WORKDIR mcm-metadataExtractor
+WORKDIR metadata-extractor
 RUN pip install -r requirements.txt
 RUN cp mcm/metadataExtractor/configuration.example.py mcm/metadataExtractor/configuration.py
 
 
-COPY extractor.sh /mcm
+COPY extractor.sh /
 
-ENTRYPOINT ["/mcm/extractor.sh"]
+ENTRYPOINT ["/extractor.sh"]
