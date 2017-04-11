@@ -9,6 +9,9 @@ The easiest option is to use docker-compose
 I recommend you install docker and docker-compose manually from the docker.io website. You can use the docker version that comes with your linux distro but it might be outdated and not work.
 
 #### prepare storage
+
+**This part is optional; skip if you just want to try it**
+
 This deployment includes a container for the Swift object store. This container needs an external volume for swift, by default this is
  mapped to `/tmp/mcm_swift`. For production/benchmark you should use a dedicated xfs partition:
 
@@ -20,6 +23,7 @@ then in docker-compose.yaml, swift section replace `- /tmp/mcm_swift:/srv` with 
 
 
 #### run docker-compose
+**these 3 commands are all you actually need!**
 
 
     git clone https://github.com/sdos/deploy-sdos.git
