@@ -22,6 +22,7 @@ RUN cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
 
 RUN pip install -r requirements.txt
 WORKDIR mcm/Bluebox/angular
+RUN npm install
 RUN yarn install
 
 
