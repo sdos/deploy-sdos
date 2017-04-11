@@ -22,7 +22,9 @@ RUN cp mcm/Bluebox/configuration.example.py mcm/Bluebox/configuration.py
 
 RUN pip install -r requirements.txt
 WORKDIR mcm/Bluebox/angular
-RUN npm install
+
+# workaround for bad js package @11.04.2017
+RUN yarn install; exit 0;
 RUN yarn install
 
 
