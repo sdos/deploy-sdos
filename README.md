@@ -34,6 +34,8 @@ then in docker-compose.yaml, swift section replace `- /tmp/mcm_swift:/srv` with 
 once finished, visit
 
 
+    http://localhost:8000
+    or
     http://172.18.0.100:8000
 
     tenant: mcmdemo
