@@ -1,11 +1,11 @@
 # deploy an SDOS demo system
 in this repo you can find scripts/tools to set up a complete demo environment including backend storage
 
-The easiest option is to use docker-compose
+The easiest options are either kubernetes or docker-compose.
 
 
 
-# Docker compose based all-in-one demo system
+# Docker-compose based all-in-one demo system
 I recommend you install docker and docker-compose manually from the docker.io website. You can use the docker version that comes with your linux distro but it might be outdated and not work.
 
 #### prepare storage
@@ -52,10 +52,31 @@ Check what hosts your local DNS uses and enter them:
     "dns": ["129.69.216.2", "129.69.211.1", "8.8.8.8"]
     }
 
+# Kubernetes deployment
+tested with Kubernetes 1.5 on IBM Bluemix.
+
+the two files `kube-deployment-sdos.yaml` and `kube-deployment-mcm.yaml` contain the container deploy and service templates for the whole system.
+
+    kubectl apply -f kube-deployment-sdos.yaml
+    kubectl apply -f kube-deployment-mcm.yaml   <optional>
+
+The first command will deploy pods for the Swift object store, the SDOS core component, and the Bluebox demo UI.
+In `kube-deployment-mcm`, the additional components for metadata management are installed. They are: task runner (extractor), apache kafka, kafka-websocket, node red, postgresql.
 
 
 
-# Automated deployment for Development setup
+once finished, visit
+
+
+    http://<worker-node public IP>:31888
+
+    tenant: mcmdemo
+    user: user
+    pass: passw0rd
+
+
+
+# setup script for development setup
 
 1. install an ubuntu VM; 14.04, 16.04, and 16.10 were tested
 2. clone this repo: `git clone https://github.com/timwaizenegger/mcm-deployEnvironment.git`

@@ -1,0 +1,140 @@
+###############################################################################
+# bluebox
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: bluebox
+spec:
+  type: NodePort
+  ports:
+    - name: "8000"
+      port: 8000
+      nodePort: 31888
+  selector:
+    app: bluebox
+  #clusterIP: {}
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bluebox-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: bluebox
+    spec:
+      containers:
+      - name: bluebox
+        image: timwaizenegger/sdos-bluebox
+        ports:
+          - containerPort: 8000
+        env:
+          - name: "MY_ENDPOINT_HOST"
+            value: "bluebox"
+          - name: "SWIFT_AUTH_VERSION"
+            value: "1.0"
+          - name: "SWIFT_HOST"
+            value: "sdos"
+          - name: "SWIFT_PORT"
+            value: "3000"
+          - name: "POSTGRES_HOST"
+            value: "postgres"
+          - name: "POSTGRES_PORT"
+            value: "5432"
+          - name: "NODERED_HOST"
+            value: "nodered"
+          - name: "NODERED_PORT"
+            value: "1880"
+
+---
+###############################################################################
+# sdos
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: sdos
+spec:
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: sdos
+  #clusterIP: None
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sdos-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sdos
+    spec:
+      containers:
+      - name: sdos
+        image: timwaizenegger/sdos-core
+        ports:
+          - containerPort: 3000
+        env:
+          - name: "MY_ENDPOINT_HOST"
+            value: "sdos"
+          - name: "SWIFT_AUTH_VERSION"
+            value: "1.0"
+          - name: "SWIFT_AUTH_HOST"
+            value: "swift"
+          - name: "SWIFT_AUTH_PORT"
+            value: "8080"
+          - name: "SWIFT_STORE_HOST"
+            value: "swift"
+          - name: "SWIFT_STORE_PORT"
+            value: "8080"
+
+---
+###############################################################################
+# swift
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: swift
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: swift
+  #clusterIP: None
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: swift-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: swift
+    spec:
+      containers:
+      - name: swift
+        image: timwaizenegger/sdos-swift
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+        - name: swift-storage
+          mountPath: /srv
+      volumes:
+      - name: swift-storage
+        emptyDir: {}

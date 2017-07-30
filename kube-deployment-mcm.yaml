@@ -1,0 +1,189 @@
+###############################################################################
+# extractor
+###############################################################################
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: extractor-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: extractor
+    spec:
+      containers:
+      - name: extractor
+        image: timwaizenegger/sdos-extractor
+        env:
+          - name: "TENANT_NAME"
+            value: "mcmdemo"
+          - name: "SWIFT_HOST"
+            value: "sdos"
+          - name: "SWIFT_PORT"
+            value: "3000"
+          - name: "KAFKA_HOST"
+            value: "kafka"
+          - name: "KAFKA_PORT"
+            value: "9092"
+          - name: "POSTGRES_HOST"
+            value: "postgres"
+          - name: "POSTGRES_PORT"
+            value: "5432"
+
+---
+###############################################################################
+# Kafka
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  ports:
+    - name: "9092"
+      port: 9092
+      targetPort: 9092
+    - name: "2181"
+      port: 2181
+      targetPort: 2181
+  selector:
+    app: kafka
+  #clusterIP: None
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafka-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: spotify/kafka
+        ports:
+          - containerPort: 9092
+          - containerPort: 2181
+        env:
+          - name: "ADVERTISED_HOST"
+            value: "kafka"
+          - name: "ADVERTISED_PORT"
+            value: "9092"
+
+---
+###############################################################################
+# Kafka websocket
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafkaws
+spec:
+  type: NodePort
+  ports:
+    - name: "7080"
+      port: 7080
+      nodePort: 31780
+  selector:
+    app: kafkaws
+  #clusterIP: None
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafkaws-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafkaws
+    spec:
+      containers:
+      - name: kafkaws
+        image: timwaizenegger/kafka-websocket:kafka-hostname
+        ports:
+          - containerPort: 7080
+
+---
+###############################################################################
+# nodered
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodered
+spec:
+  type: NodePort
+  ports:
+    - name: "1880"
+      port: 1880
+      nodePort: 31880
+  selector:
+    app: nodered
+  #clusterIP: None
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nodered-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nodered
+    spec:
+      containers:
+      - name: nodered
+        image: timwaizenegger/node-red-docker
+        ports:
+          - containerPort: 1880
+
+
+---
+###############################################################################
+# Postgres
+###############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+  #clusterIP: None
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        ports:
+          - containerPort: 5432
+        env:
+          - name: "POSTGRES_PASSWORD"
+            value: "passw0rd"
+          - name: "POSTGRES_DB"
+            value: "mcm_metadata_mcmdemo"
