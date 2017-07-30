@@ -1,3 +1,6 @@
+# http://169.51.8.156:31888/
+# http://184.172.214.175:31888/
+
 ###############################################################################
 # bluebox
 ###############################################################################
@@ -116,17 +119,19 @@ spec:
   #clusterIP: None
 
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
-  name: swift-deployment
+  name: swift
 spec:
+  serviceName: "swift"
   replicas: 1
   template:
     metadata:
       labels:
         app: swift
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
       - name: swift
         image: timwaizenegger/sdos-swift
@@ -138,3 +143,27 @@ spec:
       volumes:
       - name: swift-storage
         emptyDir: {}
+
+#
+#apiVersion: extensions/v1beta1
+#kind: Deployment
+#metadata:
+#  name: swift-deployment
+#spec:
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: swift
+#    spec:
+#      containers:
+#      - name: swift
+#        image: timwaizenegger/sdos-swift
+#        ports:
+#          - containerPort: 8080
+#        volumeMounts:
+#        - name: swift-storage
+#          mountPath: /srv
+#      volumes:
+#      - name: swift-storage
+#        emptyDir: {}
