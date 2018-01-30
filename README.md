@@ -4,6 +4,9 @@ in this repo you can find scripts/tools to set up a complete demo environment in
 The easiest options are either kubernetes or docker-compose.
 
 
+# Read the PDF
+You can find a lot of details about the concepts, as well as about the implementation, in my Dissertation: 
+[https://elib.uni-stuttgart.de/handle/11682/9588](https://elib.uni-stuttgart.de/handle/11682/9588)
 
 # Docker-compose based all-in-one demo system
 I recommend you install docker and docker-compose manually from the docker.io website. You can use the docker version that comes with your linux distro but it might be outdated and not work.
